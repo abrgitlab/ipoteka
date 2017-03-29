@@ -17,6 +17,7 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         'date',
+        //'days_in_period',
         'sum_debt',
         'sum_percent',
         'sum_annuity',
