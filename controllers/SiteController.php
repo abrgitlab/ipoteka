@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\FullVariantDataProvider;
 use app\models\Payment;
 use app\models\Variant;
 use Yii;

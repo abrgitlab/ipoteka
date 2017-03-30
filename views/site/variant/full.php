@@ -24,3 +24,6 @@ echo GridView::widget([
         'sum_left',
     ],
 ]);
+?>
+<p><strong>Всего по основному долгу: </strong> <?= $model->sumDebtFull ?> (выплачено: <?= $model->sumDebtPayed ?>)</p>
+<p><strong>Всего по процентам: </strong> <?= $model->sumPercentFull ?> (выплачено: <?= $model->sumPercentPayed ?>)</p>

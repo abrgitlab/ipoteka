@@ -28,6 +28,12 @@ use yii\db\ActiveRecord;
 class Variant extends ActiveRecord
 {
 
+    public $sumDebtFull = 0;
+    public $sumPercentFull = 0;
+
+    public $sumDebtPayed = 0;
+    public $sumPercentPayed = 0;
+
     public static function tableName()
     {
         return 'variant';
@@ -56,6 +62,12 @@ class Variant extends ActiveRecord
 
     public function calculate() {
         $result = [];
+
+        $this->sumDebtFull = 0;
+        $this->sumPercentFull = 0;
+
+        $this->sumDebtPayed = 0;
+        $this->sumPercentPayed = 0;
 
         $payments = $this->getPayments()->orderBy('date')->all();
 
@@ -91,6 +103,14 @@ class Variant extends ActiveRecord
                         'sum_annuity' => $payment->sum,
                         'sum_left' => $sumLeft
                     ];
+
+                    $this->sumDebtFull += $sumDebt;
+                    $this->sumPercentFull += $sumPercent;
+
+                    if (time() > $paymentDate) {
+                        $this->sumDebtPayed += $sumDebt;
+                        $this->sumPercentPayed += $sumPercent;
+                    }
 
                     $lastFastPayment += $sumDebt;
                     $lastBasicSum = $sumLeft;
@@ -134,6 +154,14 @@ class Variant extends ActiveRecord
                 'sum_annuity' => $sumAnnuity,
                 'sum_left' => $sumLeft
             ];
+
+            $this->sumDebtFull += $sumDebt;
+            $this->sumPercentFull += $sumPercent;
+
+            if (time() > $paymentDate) {
+                $this->sumDebtPayed += $sumDebt;
+                $this->sumPercentPayed += $sumPercent;
+            }
 
             $currentDate = $nextDate;
         }
