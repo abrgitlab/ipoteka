@@ -77,6 +77,10 @@ class Variant extends ActiveRecord
                 if ($paymentDate > $currentDate && $paymentDate < $nextDate) {
                     $daysInPeriod = date('d', $paymentDate - $currentDate) - 1;
                     $sumPercent = round($sumLeft * ($this->percent * $daysInPeriod / ((date('z', mktime(0, 0, 0, 12, 31, date('Y', $currentDate))) + 1) * 100)), 2);
+
+                    if ($sumPercent > $payment->sum)
+                        $sumPercent = $payment->sum;
+
                     $sumDebt = round($payment->sum - $sumPercent, 2);
                     $sumLeft = round($sumLeft - $sumDebt, 2);
                     $result[] = [

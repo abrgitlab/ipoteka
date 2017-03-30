@@ -37,7 +37,7 @@ class PaymentController extends Controller
     public function actionIndex($variant_id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Payment::find()->where(['variant_id' => $variant_id]),
+            'query' => Payment::find()->where(['variant_id' => $variant_id])->orderBy('date'),
         ]);
 
         return $this->render('index', [
@@ -71,7 +71,7 @@ class PaymentController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->variant_id = $variant_id;
             if ($model->save())
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index', 'variant_id' => $variant_id]);
             else
                 return $this->render('create', [
                     'model' => $model,
@@ -89,12 +89,12 @@ class PaymentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $variant_id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'variant_id' => $variant_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -108,11 +108,11 @@ class PaymentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $variant_id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'variant_id' => $variant_id]);
     }
 
     /**

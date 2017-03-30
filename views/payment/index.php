@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -25,7 +26,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'date',
             'sum',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'delete' => function($url, $model, $key) {
+                        $options = [
+                            'title' => 'Удалить',
+                            'aria-label' => 'Удалить',
+                            'data-pjax' => '0',
+                            'data-confirm' => 'Вы действительно хотите удалить данный платёж?',
+                            'data-method' => 'post',
+                        ];
+                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-trash"]);
+                        return Html::a($icon, Url::to(['payment/delete', 'id' => $model->id, 'variant_id' => $model->variant_id]), $options);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>
