@@ -26,7 +26,7 @@ class TestController extends Controller
      */
     public function actionIndex()
     {
-        $model = Variant::find()->where(['id' => 1])->one();
+        $model = Variant::find()->where(['id' => 10])->one();
         return $model->calculate();
     }
 }

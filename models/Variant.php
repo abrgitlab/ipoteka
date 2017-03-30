@@ -95,7 +95,7 @@ class Variant extends ActiveRecord
                     $lastFastPayment += $sumDebt;
                     $lastBasicSum = $sumLeft;
                     $dateDiff = $currentDate - strtotime($this->start_date);
-                    $period = $this->period - date('m', $dateDiff) + 12 * (date('Y', $dateDiff) - 1970);
+                    $period = $this->period - (date('m', $dateDiff) + 12 * (date('Y', $dateDiff) - 1970));
                 }
 
                 $daysInPeriodLeft -= $daysInPeriod;

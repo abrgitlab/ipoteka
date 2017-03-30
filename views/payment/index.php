@@ -40,6 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         ];
                         $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-trash"]);
                         return Html::a($icon, Url::to(['payment/delete', 'id' => $model->id, 'variant_id' => $model->variant_id]), $options);
+                    },
+                    'update' => function($url, $model, $key) {
+                        $options = [
+                            'title' => 'Изменить',
+                            'aria-label' => 'Изменить',
+                            'data-pjax' => '0',
+                        ];
+                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]);
+                        return Html::a($icon, Url::to(['payment/update', 'id' => $model->id, 'variant_id' => $model->variant_id]), $options);
                     }
                 ]
             ],

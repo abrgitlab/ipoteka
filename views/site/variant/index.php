@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,7 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'percent',
             'start_date',
             'period',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {clone}',
+                'buttons' => [
+                    'clone' => function($url, $model, $key) {
+                        $options = [
+                            'title' => 'Клонировать',
+                            'aria-label' => 'Клонировать',
+                            'data-pjax' => '0',
+                        ];
+                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-copy"]);
+                        return Html::a($icon, Url::to(['clone', 'id' => $model->id]), $options);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>
